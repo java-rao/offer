@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>offer</title>
+</head>
+<body>
+	<script src="https://how2j.cn/study/jquery.min.js"></script>
+	<input type="button" id="found" value="创建批量查询任务">
+	<div id="trueOrFalse"></div>
+	<input type="button" id="single" value="获取单个查询结果">
+	<div id="result1"></div>
+	<input type="button" id="batch" value="获取批量查询结果">
+	<div id="result2"></div>
+	<script>
+		function gain(){
+			var page="http://yun.zhuzhufanli.com/mini/select/";
+			$.ajax({
+				type:"post",
+				url:page,
+				contentType:"application/x-www-form-urlencoded",
+				data:{
+					appid:"124986",
+					outerid:"d5ZVkBM8VuQHS0Rx",
+					pageno:"1",
+					taskname:"R201016_124844950"
+				},
+				success:function(result){
+					$("#result2").html(result);
+				}
+			});
+		}
+		//每四小时查询一次
+		self.setInterval("gain()",1000*60*60*4);
+		$(function(){
+			$("#found").click(function(){
+				var page="http://yun.zhuzhufanli.com/mini/create/";
+				$.ajax({
+					type:"post",
+					url:page,
+					contentType:"application/x-www-form-urlencoded",
+					data:{
+						appid:"124986",
+						outerid:"d5ZVkBM8VuQHS0Rx",
+						zffs:"jinbi",
+						kdgs:"zhongtong",
+						kddhs:"70263727633936",
+						isBackTaskName:"yes"
+					},
+					success:function(result){
+						$("#trueOrFalse").html(result);
+					}
+				});
+			});
+			$("#single").click(function(){
+				var page="http://yun.zhuzhufanli.com/mini/query/";
+				$.ajax({
+					type:"post",
+					url:page,
+					contentType:"application/x-www-form-urlencoded",
+					data:"kdgs=zhongtong&kddh=70263727633936",
+					success:function(result){
+						$("#result1").html(result);
+					}
+				});
+			});
+			$("#batch").click(gain);
+		});
+	</script>
+</body>
+</html>
